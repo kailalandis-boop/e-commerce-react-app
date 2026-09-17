@@ -4,10 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Rating from '../components/ui/Rating';
 import Price from '../components/ui/Price';
 
+console.log('params id:', id);
+console.log('books:', books);
+
 const BookInfo = ({ books }) => {
     const { id } = useParams();
-    const book = books.find(book => +book.id === +id);
-console.log(book)
+    const book = books.find(book => +book.id === +id);    
+    console.log(book);
 
     return (
         <div className="books__body">
@@ -65,6 +68,7 @@ console.log(book)
                                 Recommended Books
                             </h2>
                         </div>
+                        books.filter(book => book.rating === 5)
                     </div>
                 </div>
             </main>
