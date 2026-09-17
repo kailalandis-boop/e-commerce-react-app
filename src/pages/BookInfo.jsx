@@ -6,7 +6,9 @@ import Price from '../components/ui/Price';
 
 const BookInfo = ({ books }) => {
     const { id } = useParams();
-    console.log(id)
+    const book = books.find(book => +book.id === +id);
+console.log(book)
+
     return (
         <div className="books__body">
             <main id="books__main">
