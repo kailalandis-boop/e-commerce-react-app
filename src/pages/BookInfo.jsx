@@ -24,18 +24,23 @@ console.log(book)
                         </div>
                         <div className="book__selected">
                             <figure className="book__selected--figure">
-                                <img src="https://m.media-amazon.com/images/I/61mIq2iJUXL._AC_UF1000,1000_QL80_.jpg" className="book__selected--img" />
+                                <img src={book.url} 
+                                alt=""
+                                className="book__selected--img"
+                                />
                             </figure>
                             <div className="book__selected--description">
-                                <h2 className="book__selected--title">Cracking the Coding Interview</h2>
-                                <Rating rating="4.5" />
+                                <h2 className="book__selected--title">
+                                    {book.title}
+                                </h2>
+                                <Rating rating={book.rating} />
                                 <div className="book__selected--price"></div>
-                                <Price originalPrice={50} salePrice={20} />
+                                <Price originalPrice={book.originalPrice} salePrice={book.salePrice} />
                             </div>
                             <div className="book__summary">
-                                <div className="book__summary--title">
+                                <h3 className="book__summary--title">
                                     Summary
-                                </div>
+                                </h3>
                                 <p className="book__summary--para">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                                     Molestiae eius provident enim, sed, fugit id non amet 
