@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Rating from '../components/ui/Rating';
 import Price from '../components/ui/Price';
+import Book from '../components/ui/Book';
 
-console.log('params id:', id);
-console.log('books:', books);
-
-const BookInfo = ({ books }) => {
+const BookInfo = ({ books, addToCart, cart }) => {
     const { id } = useParams();
-    const book = books.find(book => +book.id === +id);    
-    console.log(book);
+    const book = books.find(book => +book.id === +id);   
+    
+    function addBookToCart(book) {
+        addToCart(book);
+    }
+
+    function bookExistsOnCart() {
+        return cart.find(book => book.id === +id);
+    }
 
     return (
         <div className="books__body">
@@ -39,25 +44,31 @@ const BookInfo = ({ books }) => {
                                 <Rating rating={book.rating} />
                                 <div className="book__selected--price"></div>
                                 <Price originalPrice={book.originalPrice} salePrice={book.salePrice} />
+                                <div className="book__summary">
+                                    <h3 className="book__summary--title">
+                                        Summary
+                                    </h3>
+                                    <p className="book__summary--para">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                        Molestiae eius provident enim, sed, fugit id non amet 
+                                        sit iste in dolores reiciendis repellat illum quisquam, 
+                                        quo velit ipsam quam nam.
+                                    </p>
+                                    <p className="book__summary--para">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                        Molestiae eius provident enim, sed, fugit id non amet 
+                                        sit iste in dolores reiciendis repellat illum quisquam, 
+                                        quo velit ipsam quam nam.
+                                    </p>
+                                </div>
+                                {bookExistsOnCart() ? ( 
+                                    <button className="btn">Checkout</button>
+                                ) : (
+                                    <button className="btn" onClick={() => addBookToCart(book)}>
+                                        Add to Cart
+                                    </button> 
+                                )}
                             </div>
-                            <div className="book__summary">
-                                <h3 className="book__summary--title">
-                                    Summary
-                                </h3>
-                                <p className="book__summary--para">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                                    Molestiae eius provident enim, sed, fugit id non amet 
-                                    sit iste in dolores reiciendis repellat illum quisquam, 
-                                    quo velit ipsam quam nam.
-                                </p>
-                                <p className="book__summary--para">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                                    Molestiae eius provident enim, sed, fugit id non amet 
-                                    sit iste in dolores reiciendis repellat illum quisquam, 
-                                    quo velit ipsam quam nam.
-                                </p>
-                            </div>
-                            <button className="btn">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -67,8 +78,14 @@ const BookInfo = ({ books }) => {
                             <h2 className="book__selected--title--top">
                                 Recommended Books
                             </h2>
+                        </div> 
+                        <div className="books">
+                            {books
+                                .filter(book => book.rating === 5 && +book.id !== +id)
+                                .slice(0,4)
+                                .map(book => <Book book={book} key={book.id} />)
+                            }
                         </div>
-                        books.filter(book => book.rating === 5)
                     </div>
                 </div>
             </main>
